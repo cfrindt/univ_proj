@@ -1,0 +1,39 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "de.uni.hohenheim.psm"
+    },
+    "jhipsterVersion": "6.9.0",
+    "applicationType": "microservice",
+    "baseName": "SmartLernplatz",
+    "packageName": "de.uni.hohenheim.psm",
+    "packageFolder": "de/uni/hohenheim/psm",
+    "serverPort": "8081",
+    "authenticationType": "jwt",
+    "cacheProvider": "hazelcast",
+    "enableHibernateCache": true,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "prodDatabaseType": "mariadb",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": "eureka",
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "ZWNjMTdmNDkzYTgwNWM5NTQ5NjU4MDE1ZjhkODBjOTY5NTZlZWFjNDIwNzNhMTVkMjdhMDYwOWZhMzAxMTM5ODZhYTNiZDRmOWMwMmI5MjI3NzI3MzNlZDhhZmQ4NjkwZmI1YmZhMmUyM2ExNWY5MDU3ZWZhOTZlMzA1YTJkY2M=",
+    "embeddableLaunchScript": false,
+    "creationTimestamp": 1597258952192,
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": false,
+    "clientPackageManager": "npm",
+    "blueprints": [],
+    "skipClient": true,
+    "skipUserManagement": true,
+    "lastLiquibaseTimestamp": 1598812565000
+  }
+}

@@ -1,0 +1,69 @@
+<div>
+    <h2 id="page-heading">
+        <span>Parking Spots</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-parking-spot" [routerLink]="['/parking-spot/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span>
+            Create a new Parking Spot
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="parkingSpots?.length === 0">
+        <span>No parkingSpots found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="parkingSpots?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr>
+                    <th scope="col" ><span>ID</span></th>
+                    <th scope="col" ><span>Spot Type</span></th>
+                    <th scope="col" ><span>Occupied</span></th>
+                    <th scope="col" ><span>Parking Area</span></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let parkingSpot of parkingSpots ;trackBy: trackId">
+                    <td><a [routerLink]="['/parking-spot', parkingSpot.id, 'view']">{{ parkingSpot.id }}</a></td>
+                    <td>{{ parkingSpot.spotType }}</td>
+                    <td>{{ parkingSpot.occupied }}</td>
+                    <td>
+                        <div *ngIf="parkingSpot.parkingAreaId">
+                            <a [routerLink]="['/parking-area', parkingSpot.parkingAreaId , 'view']" >{{ parkingSpot.parkingAreaId }}</a>
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/parking-spot', parkingSpot.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/parking-spot', parkingSpot.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(parkingSpot)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

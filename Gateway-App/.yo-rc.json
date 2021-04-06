@@ -1,0 +1,41 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "de.hohenheim.uni.psm",
+      "microservicePath": "../SmartLernplatz"
+    },
+    "jhipsterVersion": "6.8.0",
+    "applicationType": "gateway",
+    "baseName": "GatewayApp",
+    "packageName": "de.hohenheim.uni.psm",
+    "packageFolder": "de/hohenheim/uni/psm",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "hazelcast",
+    "enableHibernateCache": true,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "prodDatabaseType": "mariadb",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": "eureka",
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "MjMwYTc4MTg2YzhmOWZmMzVhNDE0YmJiMTU0ZjM3MTVjN2U2YjMyMTJlZGE0NGNiZTg3OGJkMjdkZWE2ODhjZGQ2MzkwM2FlM2FiMzY0NDFhZjNjZTJhOTNkYzFiZDQzNTMxNjRmNzViYjNiYzRhMTU0MTcwYTE2NjJkMmZlYmI=",
+    "embeddableLaunchScript": false,
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "clientFramework": "angularX",
+    "clientTheme": "none",
+    "clientThemeVariant": "",
+    "creationTimestamp": 1588775686979,
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": false,
+    "blueprints": []
+  }
+}

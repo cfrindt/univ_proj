@@ -1,0 +1,47 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "SmartLernplatz",
+  "relationships": [
+    {
+      "relationshipName": "learningArea",
+      "otherEntityName": "learningArea",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"],
+      "otherEntityField": "id",
+      "otherEntityRelationshipName": "learningSpot"
+    },
+    {
+      "relationshipName": "booking",
+      "otherEntityName": "booking",
+      "relationshipType": "one-to-many",
+      "otherEntityRelationshipName": "learningSpot"
+    }
+  ],
+  "fields": [
+    {
+      "fieldName": "occupied",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "socket",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "silence",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "changelogDate": "20200812195922",
+  "dto": "mapstruct",
+  "searchEngine": false,
+  "service": "serviceImpl",
+  "entityTableName": "learning_spot",
+  "databaseType": "sql",
+  "readOnly": false,
+  "jpaMetamodelFiltering": false,
+  "pagination": "no",
+  "microserviceName": "SmartLernplatz"
+}

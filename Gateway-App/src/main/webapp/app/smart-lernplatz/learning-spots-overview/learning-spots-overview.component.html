@@ -1,0 +1,214 @@
+<div class="row">
+    <div class="col-12 text-center">
+        <h3><b>Lernplatz Übersicht</b></h3>
+    </div>
+</div>
+<!-- <a>Lernplätze: {{currentSpot}} </a> -->
+
+<ngb-accordion *ngFor="let area of learningareas" style="text-align: center" class="col-12">
+    <ngb-panel title="{{area.name}}">
+        <ng-template ngbPanelContent>
+
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col" style="text-align: center; width: min-content">Sitzplatznummer</th>
+                    <th scope="col" style="text-align: center; width: min-content">Ruhebereich</th>
+                    <th scope="col" style="text-align: center; width: min-content">Steckdose</th>
+                    <th scope="col" style="text-align: center; width: min-content">Frei</th>
+                    <th scope="col" style="text-align: center; width: min-content">Auslastung anzeigen</th>
+                    <th scope="col" style="text-align: center; width: min-content">Admin</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let spots of  currentSpot">
+                    <td *ngIf="spots.learningAreaId == area.id"
+                        style="color: black; font-size: x-large; font-weight: bold; text-align: center"
+                        size="3x">{{ spots.id }}</td>
+                    <td style="color: #3e8acc; text-align: center"
+                        *ngIf="spots.silence && spots.learningAreaId == area.id">
+                        <fa-icon [icon]="faVolumeMute" size="2x"></fa-icon>
+                    </td>
+                    <td style="color: #2d2d2d; text-align: center"
+                        *ngIf="!spots.silence && spots.learningAreaId == area.id">
+                        <fa-icon [icon]="faComment" size="2x"></fa-icon>
+                    </td>
+                    <td style="color: forestgreen; text-align: center"
+                        *ngIf="spots.socket && spots.learningAreaId == area.id">
+                        <fa-icon [icon]="faPlug" size="2x"></fa-icon>
+                    </td>
+                    <td style="color: darkred; text-align: center"
+                        *ngIf="!spots.socket && spots.learningAreaId == area.id">
+                        <fa-icon [icon]="faTimes" size="2x"></fa-icon>
+                    </td>
+                    <td style="color: darkslategrey; text-align: center"
+                        *ngIf="!spots.occupied && spots.learningAreaId == area.id">
+                        <fa-icon [icon]="faCheckCircle" size="2x"></fa-icon>
+                    </td>
+                    <td style="color: red; text-align: center"
+                        *ngIf="spots.occupied && spots.learningAreaId == area.id">
+                        <fa-icon [icon]="faTimesCircle" size="2x"></fa-icon>
+                    </td>
+                    <td *ngIf="spots.learningAreaId == area.id" style="width: min-content; text-align: center">
+                        <button type="button" class="btn btn-primary" (click)="openStats(content, spots.id)">Belegung
+                            anzeigen
+                        </button>
+                    </td>
+                    <td *ngIf="spots.learningAreaId == area.id" style="width: min-content; text-align: center">
+                        <button type="button" class="btn btn-dark" (click)="openEdit(editcontent, spots.id)">
+                            <fa-icon [icon]="faEdit" size="1x"></fa-icon>
+                        </button>
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+        </ng-template>
+    </ngb-panel>
+</ngb-accordion>
+
+
+<ng-template #content let-modal>
+
+    <div class="modal-header">
+        <div style="text-align: center">
+            <h5 class="modal-title" style="font-weight: bold; text-align: center">Lernplatz-Statistik</h5>
+        </div>
+        <button type="button" (click)="close()" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+
+    <div>
+        <canvas id="canvas"> {{chart}}</canvas>
+    </div>
+
+    <div class="modal-footer">
+        <button (click)="close()" type="button" class="btn btn-secondary" data-dismiss="modal">Schließen</button>
+    </div>
+
+</ng-template>
+
+
+<ng-template #editcontent let-editModal>
+
+    <div class="modal-header">
+        <h5 class="modal-title" style="font-weight: bold">Lernplatz bearbeiten</h5>
+        <button type="button" (click)="close()" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+
+
+            <div class="form-group" [hidden]="!editForm.get('id')!.value" style="display: none">
+                <label for="id">ID</label>
+                <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly/>
+            </div>
+
+            <div class="form-group" style="display: none">
+                <label class="form-control-label" for="field_occupied">Occupied</label>
+                <input type="checkbox" class="form-control" name="occupied" id="field_occupied"
+                       formControlName="occupied"/>
+                <div
+                    *ngIf="editForm.get('occupied')!.invalid && (editForm.get('occupied')!.dirty || editForm.get('occupied')!.touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('occupied')?.errors?.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="row" style="alignment: left">
+
+                    <div class="col">
+
+                        <label class="form-control-label" for="field_silence"><a
+                            style="font-weight: bold">Ruhebereich: </a></label>
+
+                    </div>
+
+                    <div class="col">
+                        <input type="checkbox" class="form-control" name="silence" id="field_silence"
+                               formControlName="silence">
+                    </div>
+
+                </div>
+                <div
+                    *ngIf="editForm.get('silence')!.invalid && (editForm.get('silence')!.dirty || editForm.get('silence')!.touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('silence')?.errors?.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row" style="alignment: left">
+
+                    <div class="col">
+                        <label class="form-control-label" for="field_socket"><a style="font-weight: bold">Steckdose
+                            verfügbar:</a></label>
+                    </div>
+
+                    <div class="col">
+                        <input type="checkbox" class="form-control" name="socket" id="field_socket"
+                               formControlName="socket">
+                    </div>
+
+                </div>
+                <div
+                    *ngIf="editForm.get('socket')!.invalid && (editForm.get('socket')!.dirty || editForm.get('socket')!.touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('socket')?.errors?.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="form-control-label" for="field_learningArea">Lernbereich</label>
+                <select class="form-control" id="field_learningArea" name="learningArea"
+                        formControlName="learningAreaId">
+                    <option *ngIf="!editForm.get('learningAreaId')!.value" [ngValue]="null" selected></option>
+                    <option [ngValue]="learningAreaOption.id"
+                            *ngFor="let learningAreaOption of learningareas; trackBy: trackById">{{ learningAreaOption.name }}</option>
+                </select>
+            </div>
+            <div style="display: none"
+                 *ngIf="editForm.get('learningAreaId')!.invalid && (editForm.get('learningAreaId')!.dirty || editForm.get('learningAreaId')!.touched)">
+                <small class="form-text text-danger"
+                       *ngIf="editForm.get('learningAreaId')?.errors?.required">
+                    This field is required.
+                </small>
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+
+    <div class="modal-footer">
+
+        <button (click)="delete(selectedLearningSpot?.id)" type="button" class="btn btn-danger" data-dismiss="modal">
+            Lernplatz löschen
+        </button>
+
+        <button type="submit" [disabled]="editForm.invalid || isSaving"
+                class="btn btn-primary" (click)="save()">Änderungen speichern
+        </button>
+
+        <button (click)="close()" type="button" class="btn btn-secondary" data-dismiss="modal">Schließen</button>
+    </div>
+
+</ng-template>

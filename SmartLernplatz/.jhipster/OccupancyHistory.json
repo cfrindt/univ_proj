@@ -1,0 +1,33 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "SmartLernplatz",
+  "relationships": [],
+  "fields": [
+    {
+      "fieldName": "timeStamp",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "occCounter",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "leanringSpotId",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "localDateStamp",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "changelogDate": "20200830183605",
+  "dto": "no",
+  "searchEngine": false,
+  "service": "serviceImpl",
+  "entityTableName": "occupancy_history",
+  "databaseType": "sql",
+  "readOnly": false,
+  "jpaMetamodelFiltering": false,
+  "pagination": "no",
+  "microserviceName": "SmartLernplatz"
+}

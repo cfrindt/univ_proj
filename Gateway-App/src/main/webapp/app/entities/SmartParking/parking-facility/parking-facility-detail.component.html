@@ -1,0 +1,38 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="parkingFacility">
+            <h2><span>Parking Facility</span> {{ parkingFacility.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span>Name</span></dt>
+                <dd>
+                    <span>{{ parkingFacility.name }}</span>
+                </dd>
+                <dt><span>Capacity</span></dt>
+                <dd>
+                    <span>{{ parkingFacility.capacity }}</span>
+                </dd>
+                <dt><span>Fully Occupied</span></dt>
+                <dd>
+                    <span>{{ parkingFacility.fullyOccupied }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/parking-facility', parkingFacility.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

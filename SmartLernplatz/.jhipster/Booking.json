@@ -1,0 +1,52 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "SmartLernplatz",
+  "relationships": [
+    {
+      "relationshipName": "learningSpot",
+      "otherEntityName": "learningSpot",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"],
+      "otherEntityField": "id",
+      "otherEntityRelationshipName": "booking"
+    }
+  ],
+  "fields": [
+    {
+      "fieldName": "userId",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "bookingStartStamp",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "bookingEndStamp",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "isPaused",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "pauseStartStamp",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "pauseEndStamp",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "changelogDate": "20200812201523",
+  "dto": "mapstruct",
+  "searchEngine": false,
+  "service": "serviceImpl",
+  "entityTableName": "booking",
+  "databaseType": "sql",
+  "readOnly": false,
+  "jpaMetamodelFiltering": false,
+  "pagination": "no",
+  "microserviceName": "SmartLernplatz"
+}

@@ -1,0 +1,70 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="booking">
+            <h2><span>Booking</span> {{ booking.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span>Start Time</span></dt>
+                <dd>
+                    <span>{{ booking.startTime }}</span>
+                </dd>
+                <dt><span>End Time</span></dt>
+                <dd>
+                    <span>{{ booking.endTime }}</span>
+                </dd>
+                <dt><span>Parking Time</span></dt>
+                <dd>
+                    <span>{{ booking.parkingTime }}</span>
+                </dd>
+                <dt><span>Reserved</span></dt>
+                <dd>
+                    <span>{{ booking.reserved }}</span>
+                </dd>
+                <dt><span>Reservation Time</span></dt>
+                <dd>
+                    <span>{{ booking.reservationTime }}</span>
+                </dd>
+                <dt><span>Cost</span></dt>
+                <dd>
+                    <span>{{ booking.cost }}</span>
+                </dd>
+                <dt><span>Booking Active</span></dt>
+                <dd>
+                    <span>{{ booking.bookingActive }}</span>
+                </dd>
+                <dt><span>User Id</span></dt>
+                <dd>
+                    <span>{{ booking.userId }}</span>
+                </dd>
+                <dt><span>Parking Spot</span></dt>
+                <dd>
+                    <div *ngIf="booking.parkingSpotId">
+                        <a [routerLink]="['/parking-spot', booking.parkingSpotId, 'view']">{{ booking.parkingSpotId }}</a>
+                    </div>
+                </dd>
+                <dt><span>Car</span></dt>
+                <dd>
+                    <div *ngIf="booking.carId">
+                        <a [routerLink]="['/car', booking.carId, 'view']">{{ booking.carLicensePlate }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/booking', booking.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,52 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-learning-area-heading">Create or edit a Learning Area</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_name">Name</label>
+                    <input type="text" class="form-control" name="name" id="field_name"
+                           formControlName="name"/>
+                    <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('name')?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_learningFacility">Learning Facility</label>
+                    <select class="form-control" id="field_learningFacility" name="learningFacility" formControlName="learningFacilityId">
+                        <option *ngIf="!editForm.get('learningFacilityId')!.value" [ngValue]="null" selected></option>
+                        <option [ngValue]="learningFacilityOption.id" *ngFor="let learningFacilityOption of learningfacilities; trackBy: trackById">{{ learningFacilityOption.id }}</option>
+                    </select>
+                </div>
+                <div *ngIf="editForm.get('learningFacilityId')!.invalid && (editForm.get('learningFacilityId')!.dirty || editForm.get('learningFacilityId')!.touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('learningFacilityId')?.errors?.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

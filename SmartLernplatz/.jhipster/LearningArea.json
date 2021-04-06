@@ -1,0 +1,37 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "SmartLernplatz",
+  "relationships": [
+    {
+      "relationshipName": "learningFacility",
+      "otherEntityName": "learningFacility",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"],
+      "otherEntityField": "id",
+      "otherEntityRelationshipName": "learningArea"
+    },
+    {
+      "relationshipName": "learningSpot",
+      "otherEntityName": "learningSpot",
+      "relationshipType": "one-to-many",
+      "otherEntityRelationshipName": "learningArea"
+    }
+  ],
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    }
+  ],
+  "changelogDate": "20200812195316",
+  "dto": "mapstruct",
+  "searchEngine": false,
+  "service": "serviceImpl",
+  "entityTableName": "learning_area",
+  "databaseType": "sql",
+  "readOnly": false,
+  "jpaMetamodelFiltering": false,
+  "pagination": "no",
+  "microserviceName": "SmartLernplatz"
+}

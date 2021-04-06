@@ -1,0 +1,131 @@
+<div class="row">
+    <div class="col-12 text-center">
+        <h1 style="font-weight: bold; text-align: center">Parkplatz Übersicht</h1>
+    </div>
+</div>
+
+<ngb-accordion *ngFor="let area of parkingareas" style="text-align: center; font-weight: bold; color: black">
+    <ngb-panel style="font-weight: bold; color: black" title="{{area.name}}" >
+        <ng-template ngbPanelContent>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col" style="text-align: center; width: min-content">Parkplatznummer</th>
+
+                    <th scope="col" style="text-align: center; width: min-content">Parkplatztyp</th>
+
+                    <th scope="col" style="text-align: center; width: min-content">Frei</th>
+
+                    <th scope="col" style="text-align: center; width: min-content">Admin</th>
+
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr *ngFor="let spots of  currentSpot">
+                    <!--
+                                    <div *ngIf="spots.parkingAreaId === area.id">
+                    -->
+                    <td *ngIf="spots.parkingAreaId === area.id"
+                        style="color: black; font-size: x-large; font-weight: bold; text-align: center"
+                        size="3x">{{ spots.id }}</td>
+                    <td *ngIf="spots.parkingAreaId === area.id"
+                        style="text-align: center; font-weight: bold; vertical-align: center">
+                        {{spots.spotType}}
+                    </td>
+
+                    <td style="color: darkslategrey; text-align: center"
+                        *ngIf="!spots.occupied && spots.parkingAreaId == area.id">
+                        <fa-icon [icon]="faCheckCircle" size="2x"></fa-icon>
+                    </td>
+                    <td style="color: red; text-align: center"
+                        *ngIf="spots.occupied && spots.parkingAreaId == area.id">
+                        <fa-icon [icon]="faTimesCircle" size="2x"></fa-icon>
+                    </td>
+
+
+                    <td *ngIf="spots.parkingAreaId === area.id" style="width: min-content; text-align: center">
+                        <button type="button" class="btn btn-dark" (click)="openEdit(editcontent, spots.id)">
+                            <fa-icon [icon]="faEdit" size="1x"></fa-icon>
+                        </button>
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+        </ng-template>
+    </ngb-panel>
+</ngb-accordion>
+
+
+<ng-template #editcontent let-editModal>
+
+    <div class="modal-header">
+        <h5 class="modal-title" style="font-weight: bold">Parkposition bearbeiten</h5>
+        <button type="button" (click)="close()" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+
+
+            <div class="form-group" [hidden]="!editForm.get('id')!.value" style="display: none">
+                <label for="id">ID</label>
+                <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly/>
+            </div>
+
+            <div class="form-group">
+                <label class="form-control-label" for="field_spotType">Parkplatztyp</label>
+                <input type="text" class="form-control" name="spotType" id="field_spotType"
+                       formControlName="spotType"/>
+            </div>
+
+            <div class="form-group" style="display: none">
+                <label class="form-control-label" for="field_occupied">Occupied</label>
+                <input type="checkbox" class="form-control" name="occupied" id="field_occupied"
+                       formControlName="occupied"/>
+            </div>
+
+            <div class="form-group">
+                <label class="form-control-label" for="field_parkingArea">Parkbereich</label>
+                <select class="form-control" id="field_parkingArea" name="parkingArea"
+                        formControlName="parkingAreaId">
+                    <option *ngIf="!editForm.get('parkingAreaId')!.value" [ngValue]="null" selected></option>
+                    <option [ngValue]="parkingAreaOption.id"
+                            *ngFor="let parkingAreaOption of parkingareas; trackBy: trackById">{{ parkingAreaOption.name }}</option>
+                </select>
+            </div>
+            <div
+                *ngIf="editForm.get('parkingAreaId')!.invalid && (editForm.get('parkingAreaId')!.dirty || editForm.get('parkingAreaId')!.touched)">
+                <small class="form-text text-danger"
+                       *ngIf="editForm.get('parkingAreaId')?.errors?.required">
+                    This field is required.
+                </small>
+            </div>
+
+        </form>
+
+
+    </div>
+
+
+    <div class="modal-footer">
+
+        <button (click)="delete(selectedLearningSpot?.id)" type="button" class="btn btn-danger" data-dismiss="modal">
+            Parkplatz löschen
+        </button>
+
+        <button type="submit" [disabled]="editForm.invalid || isSaving"
+                class="btn btn-primary" (click)="save()">Änderungen speichern
+        </button>
+
+        <button (click)="close()" type="button" class="btn btn-secondary" data-dismiss="modal">Schließen
+        </button>
+    </div>
+
+</ng-template>

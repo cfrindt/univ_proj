@@ -1,0 +1,52 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-parking-spot-heading">Create or edit a Parking Spot</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_spotType">Spot Type</label>
+                    <input type="text" class="form-control" name="spotType" id="field_spotType"
+                           formControlName="spotType"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_occupied">Occupied</label>
+                    <input type="checkbox" class="form-control" name="occupied" id="field_occupied"
+                           formControlName="occupied"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_parkingArea">Parking Area</label>
+                    <select class="form-control" id="field_parkingArea" name="parkingArea" formControlName="parkingAreaId">
+                        <option *ngIf="!editForm.get('parkingAreaId')!.value" [ngValue]="null" selected></option>
+                        <option [ngValue]="parkingAreaOption.id" *ngFor="let parkingAreaOption of parkingareas; trackBy: trackById">{{ parkingAreaOption.id }}</option>
+                    </select>
+                </div>
+                <div *ngIf="editForm.get('parkingAreaId')!.invalid && (editForm.get('parkingAreaId')!.dirty || editForm.get('parkingAreaId')!.touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('parkingAreaId')?.errors?.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

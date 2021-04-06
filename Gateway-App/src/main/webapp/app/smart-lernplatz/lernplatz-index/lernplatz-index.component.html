@@ -1,0 +1,66 @@
+<div class="row">
+    <div class="col-12 text-center">
+        <h3><b>Lernplatz Management</b></h3>
+    </div>
+</div>
+<div class="row mb-3" *ngIf="!admin">
+    <div *ngIf="activeBooking && !admin" [routerLink]="'current-booking'" class="col-12 col-md-13 mt-3">
+        <button class="btn btn-light btn-block">
+            <fa-icon [icon]="faBookmark" size="6x"></fa-icon>
+            <br><a>Aktuelle Buchung</a>
+        </button>
+    </div>
+
+    <div *ngIf="!activeBooking && !admin" [routerLink]="'overview'" class="col-12 col-md-13 mt-3">
+        <button class="btn btn btn-light btn-block">
+            <fa-icon [icon]="faBookmark" size="6x"></fa-icon>
+            <br><a>Lernplatz belegen</a>
+        </button>
+    </div>
+
+</div>
+
+
+
+<div class="row mb-3">
+
+    <div *ngIf="activeBooking && admin" [routerLink]="'current-booking'" class="col-12 col-md-6">
+        <button class="btn btn-light btn-block">
+            <fa-icon [icon]="faBookmark" size="6x"></fa-icon>
+            <br><a>Aktuelle Buchung</a>
+        </button>
+    </div>
+
+    <div *ngIf="!activeBooking && admin" [routerLink]="'overview'" class="col-12 col-md-6">
+        <button class="btn btn btn-light btn-block">
+            <fa-icon [icon]="faBookmark" size="6x"></fa-icon>
+            <br><a>Lernplatz belegen</a>
+        </button>
+    </div>
+
+
+    <div *ngIf="admin" [routerLink]="'learning-spots-overview'" class="col-12 col-md-6">
+        <fa-icon></fa-icon>
+        <button class="btn btn-light btn-block">
+            <fa-icon [icon]="faListAlt" size="6x"></fa-icon>
+            <br><a>Übersicht der Lernplätze</a>
+        </button>
+    </div>
+
+    <div [routerLink]="'learning-analytics'" class="col-12 col-md-6 mt-3">
+        <button class="btn btn-light btn-block">
+            <fa-icon [icon]="faChartBar" size="6x"></fa-icon>
+            <br><a>Lern-Analyse</a>
+        </button>
+    </div>
+
+    <div [routerLink]="'occupancy'" class="col-12 col-md-6 mt-3">
+        <button class="btn btn-light btn-block">
+            <fa-icon [icon]="faBookOpen" size="6x"></fa-icon>
+            <br>
+            <a>Bibliotheks-Auslastung</a>
+        </button>
+    </div>
+
+
+</div>

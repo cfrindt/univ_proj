@@ -1,0 +1,46 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="spotHistory">
+            <h2><span>Spot History</span> {{ spotHistory.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span>Learning Spot Id</span></dt>
+                <dd>
+                    <span>{{ spotHistory.learningSpotId }}</span>
+                </dd>
+                <dt><span>Booking Start Stamp</span></dt>
+                <dd>
+                    <span>{{ spotHistory.bookingStartStamp }}</span>
+                </dd>
+                <dt><span>Booking End Stamp</span></dt>
+                <dd>
+                    <span>{{ spotHistory.bookingEndStamp }}</span>
+                </dd>
+                <dt><span>Pause Start Stamp</span></dt>
+                <dd>
+                    <span>{{ spotHistory.pauseStartStamp }}</span>
+                </dd>
+                <dt><span>Pause End Stamp</span></dt>
+                <dd>
+                    <span>{{ spotHistory.pauseEndStamp }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/spot-history', spotHistory.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

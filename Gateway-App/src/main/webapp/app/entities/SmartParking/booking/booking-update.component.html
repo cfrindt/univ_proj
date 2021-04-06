@@ -1,0 +1,125 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-booking-heading">Create or edit a Booking</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_startTime">Start Time</label>
+                    <div class="d-flex">
+                        <input id="field_startTime" type="datetime-local" class="form-control" name="startTime" formControlName="startTime" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_endTime">End Time</label>
+                    <div class="d-flex">
+                        <input id="field_endTime" type="datetime-local" class="form-control" name="endTime" formControlName="endTime" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_parkingTime">Parking Time</label>
+                    <input type="number" class="form-control" name="parkingTime" id="field_parkingTime"
+                           formControlName="parkingTime"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_reserved">Reserved</label>
+                    <input type="checkbox" class="form-control" name="reserved" id="field_reserved"
+                           formControlName="reserved"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_reservationTime">Reservation Time</label>
+                    <div class="d-flex">
+                        <input id="field_reservationTime" type="datetime-local" class="form-control" name="reservationTime" formControlName="reservationTime" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_cost">Cost</label>
+                    <input type="number" class="form-control" name="cost" id="field_cost"
+                           formControlName="cost"/>
+                    <div *ngIf="editForm.get('cost')!.invalid && (editForm.get('cost')!.dirty || editForm.get('cost')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('cost')?.errors?.min">
+                            This field should be at least 0.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('cost')?.errors?.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_bookingActive">Booking Active</label>
+                    <input type="checkbox" class="form-control" name="bookingActive" id="field_bookingActive"
+                           formControlName="bookingActive"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_userId">User Id</label>
+                    <input type="number" class="form-control" name="userId" id="field_userId"
+                           formControlName="userId"/>
+                    <div *ngIf="editForm.get('userId')!.invalid && (editForm.get('userId')!.dirty || editForm.get('userId')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('userId')?.errors?.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('userId')?.errors?.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_parkingSpot">Parking Spot</label>
+                    <select class="form-control" id="field_parkingSpot" name="parkingSpot" formControlName="parkingSpotId">
+                        <option *ngIf="!editForm.get('parkingSpotId')!.value" [ngValue]="null" selected></option>
+                        <option [ngValue]="parkingSpotOption.id" *ngFor="let parkingSpotOption of parkingspots; trackBy: trackById">{{ parkingSpotOption.id }}</option>
+                    </select>
+                </div>
+                <div *ngIf="editForm.get('parkingSpotId')!.invalid && (editForm.get('parkingSpotId')!.dirty || editForm.get('parkingSpotId')!.touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('parkingSpotId')?.errors?.required">
+                        This field is required.
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_car">Car</label>
+                    <select class="form-control" id="field_car" name="car" formControlName="carId">
+                        <option *ngIf="!editForm.get('carId')!.value" [ngValue]="null" selected></option>
+                        <option [ngValue]="carOption.id" *ngFor="let carOption of cars; trackBy: trackById">{{ carOption.licensePlate }}</option>
+                    </select>
+                </div>
+                <div *ngIf="editForm.get('carId')!.invalid && (editForm.get('carId')!.dirty || editForm.get('carId')!.touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('carId')?.errors?.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="learningArea">
+            <h2><span>Learning Area</span> {{ learningArea.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span>Name</span></dt>
+                <dd>
+                    <span>{{ learningArea.name }}</span>
+                </dd>
+                <dt><span>Learning Facility</span></dt>
+                <dd>
+                    <div *ngIf="learningArea.learningFacilityId">
+                        <a [routerLink]="['/learning-facility', learningArea.learningFacilityId, 'view']">{{ learningArea.learningFacilityId }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/learning-area', learningArea.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

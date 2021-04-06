@@ -1,0 +1,67 @@
+<div>
+    <h2 id="page-heading">
+        <span>Occupancy Histories</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-occupancy-history" [routerLink]="['/occupancy-history/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span>
+            Create a new Occupancy History
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="occupancyHistories?.length === 0">
+        <span>No occupancyHistories found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="occupancyHistories?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr>
+                    <th scope="col" ><span>ID</span></th>
+                    <th scope="col" ><span>Time Stamp</span></th>
+                    <th scope="col" ><span>Occ Counter</span></th>
+                    <th scope="col" ><span>Leanring Spot Id</span></th>
+                    <th scope="col" ><span>Local Date Stamp</span></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let occupancyHistory of occupancyHistories ;trackBy: trackId">
+                    <td><a [routerLink]="['/occupancy-history', occupancyHistory.id, 'view']">{{ occupancyHistory.id }}</a></td>
+                    <td>{{ occupancyHistory.timeStamp | date:'medium' }}</td>
+                    <td>{{ occupancyHistory.occCounter }}</td>
+                    <td>{{ occupancyHistory.leanringSpotId }}</td>
+                    <td>{{ occupancyHistory.localDateStamp | date:'mediumDate' }}</td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/occupancy-history', occupancyHistory.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/occupancy-history', occupancyHistory.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(occupancyHistory)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

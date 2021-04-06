@@ -1,0 +1,59 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 *ngIf="!spotReserved" class="modal-title">Parkplatz reservieren</h5>
+        <h5 *ngIf="spotReserved" class="modal-title">Parkplatz reserviert</h5>
+        <button (click)="activeModal.dismiss('abort')" aria-label="Close" class="close" type="button">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div *ngIf="!spotReserved" class="modal-body">
+        <div class="text-body">Sicher, dass du einen freien Parkplatz im Bereich <a
+            class="font-weight-bold">{{currentParkingArea.name}}</a>
+            reservieren möchtest?
+        </div>
+        <br>
+        <form (ngSubmit)="reserveParkingSpot(currentParkingArea)" [formGroup]="licenseForm" name="editForm" novalidate
+              role="form">
+            <div class="form-group">
+                <label class="form-control-label" for="field_car">Wählen Sie ihr Fahrzeug für die Reservierung:</label>
+                <select class="form-control" formControlName="carId" id="field_car" name="car">
+                    <option *ngIf="!licenseForm.get('carId')!.value" [ngValue]="null" selected></option>
+                    <option *ngFor="let carOption of cars"
+                            [ngValue]="carOption.licensePlate">
+                        {{carOption.licensePlate }}</option>
+                </select>
+            </div>
+        </form>
+    </div>
+    <div *ngIf="!spotReserved" class="modal-footer">
+        <button (click)="reserveParkingSpot(currentParkingArea)"
+                class="btn btn-success">
+            <fa-icon [icon]="faLock"></fa-icon>&nbsp;<span>Reservieren</span>
+        </button>
+        <button (click)="activeModal.dismiss('abort')" class="btn btn-danger">
+            <fa-icon [icon]="faTimes"></fa-icon>
+            Abbrechen
+        </button>
+    </div>
+
+    <div *ngIf="spotReserved" class="modal-body">
+        <div class="card">
+            <div class="card-header">
+                <a class="font-weight-bold"> Du hast folgenden Parkplatz reserviert:</a>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a class="font-weight-bold">Bereich: </a> {{currentParkingArea.name}}</li>
+                <li class="list-group-item"><a class="font-weight-bold">Nummer: </a> {{reservedSpot.id}}</li>
+                <li class="list-group-item"><a class="font-weight-bold">reserviert
+                    bis: </a>{{reservationExpireTime | date: 'HH:mm'}} Uhr
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div *ngIf="spotReserved" class="modal-footer">
+        <button (click)="activeModal.dismiss('close')" class="btn btn-dark">
+            <fa-icon [icon]="faWindowClose"></fa-icon>
+            Schließen
+        </button>
+    </div>
+</div>

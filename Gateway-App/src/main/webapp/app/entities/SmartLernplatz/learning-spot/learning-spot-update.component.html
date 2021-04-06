@@ -1,0 +1,76 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-learning-spot-heading">Create or edit a Learning Spot</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_occupied">Occupied</label>
+                    <input type="checkbox" class="form-control" name="occupied" id="field_occupied"
+                           formControlName="occupied"/>
+                    <div *ngIf="editForm.get('occupied')!.invalid && (editForm.get('occupied')!.dirty || editForm.get('occupied')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occupied')?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_socket">Socket</label>
+                    <input type="checkbox" class="form-control" name="socket" id="field_socket"
+                           formControlName="socket"/>
+                    <div *ngIf="editForm.get('socket')!.invalid && (editForm.get('socket')!.dirty || editForm.get('socket')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('socket')?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_silence">Silence</label>
+                    <input type="checkbox" class="form-control" name="silence" id="field_silence"
+                           formControlName="silence"/>
+                    <div *ngIf="editForm.get('silence')!.invalid && (editForm.get('silence')!.dirty || editForm.get('silence')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('silence')?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_learningArea">Learning Area</label>
+                    <select class="form-control" id="field_learningArea" name="learningArea" formControlName="learningAreaId">
+                        <option *ngIf="!editForm.get('learningAreaId')!.value" [ngValue]="null" selected></option>
+                        <option [ngValue]="learningAreaOption.id" *ngFor="let learningAreaOption of learningareas; trackBy: trackById">{{ learningAreaOption.id }}</option>
+                    </select>
+                </div>
+                <div *ngIf="editForm.get('learningAreaId')!.invalid && (editForm.get('learningAreaId')!.dirty || editForm.get('learningAreaId')!.touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('learningAreaId')?.errors?.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

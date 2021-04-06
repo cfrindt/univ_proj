@@ -1,0 +1,160 @@
+<div>
+    <div>
+        <div>
+            <div class="center text-center">
+
+                <h1 style="font-weight: bold">Lernplatz belegen</h1>
+
+                <div>
+                    <!-- class ="table"-->
+
+                    <table class="table">
+
+                        <ngb-accordion *ngFor="let learningArea of learningAreas; trackBy: trackId">
+                            <ngb-panel style="font-weight: bold; color: black" title="{{learningArea.name}}">
+                                <ng-template ngbPanelContent>
+
+
+                                    <table>
+
+                                        <div class="row">
+
+                                            <div *ngFor="let learningSpot of learningSpots; trackBy: trackId">
+
+                                                <div *ngIf="learningSpot.learningAreaId == learningArea.id">
+
+
+                                                    <div>
+
+                                                        <div class="col-lg">
+
+                                                            <button *ngIf="!learningSpot.occupied"
+                                                                    class="btn btn-success mb-3"
+                                                                    (click)="!learningSpot.occupied && openNewCarModal(content, learningSpot.id)">
+
+                                                                <div
+                                                                    style="font-size: xx-large; font-weight: bold"> {{learningSpot.id}} </div>
+
+                                                                <div class="row mb-3">
+
+                                                                    <div class="col-12 col-md-6" style="color: black"
+                                                                         *ngIf="learningSpot.silence">
+                                                                        <fa-icon style="color: white"
+                                                                                 [icon]="faVolumeMute"
+                                                                                 size="3x"></fa-icon>
+                                                                    </div>
+
+                                                                    <div class="col-12 col-md-6" style="color: black"
+                                                                         *ngIf="!learningSpot.silence">
+                                                                        <fa-icon style="color: white" [icon]="faComment"
+                                                                                 size="3x"></fa-icon>
+                                                                    </div>
+
+                                                                    <div class="col-12 col-md-6" style="color: black"
+                                                                         *ngIf="learningSpot.socket">
+                                                                        <fa-icon style="color: white" [icon]="faPlug"
+                                                                                 size="3x"></fa-icon>
+                                                                    </div>
+
+                                                                    <div class="col-12 col-md-6" style="color: green"
+                                                                         *ngIf="!learningSpot.socket">
+                                                                        <fa-icon style="color: white" [icon]="faTimes"
+                                                                                 size="3x" style="opacity: 0"></fa-icon>
+                                                                    </div>
+
+                                                                </div>
+
+
+                                                            </button>
+
+
+                                                            <button *ngIf="learningSpot.occupied"
+                                                                    class="btn btn-danger mb-3"
+                                                                    (click)="!learningSpot.occupied && openNewCarModal(content, learningSpot.id)">
+
+                                                                <div
+                                                                    style="font-size: xx-large; font-weight: bold">  {{learningSpot.id}} </div>
+
+                                                                <div class="row mb-3">
+
+                                                                    <div class="col-12 col-md-6" style="color: black"
+                                                                         *ngIf="learningSpot.silence">
+                                                                        <fa-icon style="color: white"
+                                                                                 [icon]="faVolumeMute"
+                                                                                 size="3x"></fa-icon>
+                                                                    </div>
+
+                                                                    <div class="col-12 col-md-6" style="color: black"
+                                                                         *ngIf="!learningSpot.silence">
+                                                                        <fa-icon style="color: white" [icon]="faComment"
+                                                                                 size="3x"></fa-icon>
+                                                                    </div>
+
+                                                                    <div class="col-12 col-md-6" style="color: black"
+                                                                         *ngIf="learningSpot.socket">
+                                                                        <fa-icon style="color: white" [icon]="faPlug"
+                                                                                 size="3x"></fa-icon>
+                                                                    </div>
+
+                                                                    <div class="col-12 col-md-6" style="color: red"
+                                                                         *ngIf="!learningSpot.socket">
+                                                                        <fa-icon style="color: white" [icon]="faTimes"
+                                                                                 size="3x" style="opacity: 0"></fa-icon>
+                                                                    </div>
+
+                                                                </div>
+
+
+                                                            </button>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </table>
+
+                                </ng-template>
+                            </ngb-panel>
+
+                        </ngb-accordion>
+
+
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">Lernplatz buchen</h5>
+        <button type="button" (click)="close()" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+
+    <div class="modal-body">
+
+        <p>Bestätigen Sie, dass Sie Lernplatz {{selectedLearningSpotId}} buchen
+            möchten?</p>
+
+    </div>
+
+    <div class="modal-footer">
+        <button (click)="close()" type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+
+        <button (click)="save()" type="button" class="btn btn-primary">Belegen</button>
+
+    </div>
+
+
+</ng-template>

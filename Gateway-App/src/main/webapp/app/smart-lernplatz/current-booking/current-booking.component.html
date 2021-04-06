@@ -1,0 +1,79 @@
+<div style="text-align: center">
+
+    <div class="row mb-3">
+
+
+        <div class="col-12 col-md-6">
+            <h3><b>Aktuelle Buchung</b></h3>
+
+            <div class="text-center mt-3">
+                <div style="text-align: center; width: 100%">
+
+                    <p><b>Lernplatz:</b> {{currentLearningSpotId}}</p>
+
+                    <p><b>Lernbereich:</b> {{currentLearningAreaName}}</p>
+
+                    <p><b>Startzeit:</b> {{currentBookingStart | date:'HH:mm'}} Uhr</p>
+
+                    <p *ngIf="paused == -1"><b>Buchung ist aktiv</b></p>
+
+                    <p *ngIf="paused == 1"><b>Buchung ist pausiert</b></p>
+
+                </div>
+
+                <button type="button" class="btn btn-secondary" *ngIf="paused == -1" (click)="pause(true)">Pausieren</button>
+
+
+                <button type="button" class="btn btn-secondary" *ngIf="paused == 1 " (click)="pause(false)">Pause beenden</button>
+
+                <button type="button" class="btn btn-primary" *ngIf="paused != 0" (click)="openNewCarModal(content)">Buchung beenden</button>
+
+                <p *ngIf="paused == 0">Es besteht keine aktive Buchung</p>
+
+            </div>
+        </div>
+
+
+
+        <div class="col-12 col-md-6">
+
+            <h2 class="mb-3">Heutige Pausen</h2>
+
+            <table nowrap class="table mb7" style="margin-bottom: 7%; width: 100%; border-collapse: collapse;">
+
+                <tr><b style="font-size: large">Pausen</b></tr>
+
+                <tr *ngFor="let singlePause of todaysPauses; trackBy: trackId">
+
+                    <td *ngIf="singlePause.pauseStartStamp != undefined " style="border: none">
+                        {{singlePause.pauseStartStamp | date:'HH:mm'}}
+                        - {{singlePause.pauseEndStamp | date:'HH:mm'}}</td>
+
+                </tr>
+
+            </table>
+        </div>
+    </div>
+
+    <ng-template #content let-modal>
+
+
+        <div class="modal-header">
+            <h5 class="modal-title">Lernplatz freigeben</h5>
+            <button type="button" (click)="close()" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="modal-body">
+            <p>Bestätigen Sie, dass Sie die Buchung beenden wollen</p>
+        </div>
+
+        <div class="modal-footer">
+            <button (click)="close()" type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen
+            </button>
+            <button (click)="delete()" type="button" class="btn btn-primary">Buchung beenden</button>
+        </div>
+
+
+    </ng-template>

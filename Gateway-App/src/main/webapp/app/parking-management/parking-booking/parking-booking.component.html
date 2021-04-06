@@ -1,0 +1,94 @@
+<div class="row">
+    <div class="col-12 text-center">
+        <h3><b>Parkplatz buchen</b></h3>
+        <h4 style="font-weight: bold"> {{ time | date: 'HH:mm:ss' }} Uhr </h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <table *ngIf="activeBookings" class="table">
+            <thead>
+            <tr>
+                <th scope="col">Autonummer</th>
+                <th scope="col">Parkplatznummer</th>
+                <th scope="col">Parkbeginn</th>
+                <th scope="col">Aktion</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let booking of activeBookings">
+                <td>{{ booking.carLicensePlate }}</td>
+                <td>{{ booking.parkingSpotId }}</td>
+                <td>{{ booking.startTime | date:'dd.MM.yyyy - HH:mm.ss'}} Uhr</td>
+<!--
+                <td>{{ booking.startTime | date:'yyyy GGGG - Woche: ww - HH:mm.ss.SSS ZZZZ'}}</td>
+-->
+                <td>
+                    <button (click)="endBooking(booking.id)" class="btn btn-dark">
+                        <fa-icon [icon]="faWindowClose"></fa-icon>
+                        abschließen
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div *ngIf="!activeBookings" class="alert alert-warning" role="alert">
+            Keine aktiven Buchungen im Moment vorhanden.
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <button (click)="openBookingModal(content)" class="btn btn-dark btn-block">
+            <fa-icon [icon]="faPlus"></fa-icon>
+            <b> Parkplatz buchen</b></button>
+    </div>
+</div>
+
+<ng-template #content let-modal>
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Parkplatz buchen</h5>
+            <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form name="editForm" role="form" (ngSubmit)="createBooking()" [formGroup]="bookingForm">
+                <div class="form-group">
+                    <label for="parkingArea">Parkplatzbereich</label>
+                    <select class="form-control" id="parkingArea" name="parkingArea"
+                            (change)="getParkingSpotsOfCurrentArea(bookingForm.get(['parkingArea'])!.value)"
+                            formControlName="parkingArea"
+                            required>
+                        <option *ngFor="let area of parkingAreas" [ngValue]="area.id">{{area.name}}</option>
+
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="parkingSpot">Parklplatznummer</label>
+                    <select class="form-control" id="parkingSpot" name="parkingSpot"
+                            formControlName="parkingSpot" required>
+                        <option *ngFor="let spot of parkingSpotsOfArea" [ngValue]="spot.id">{{spot.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="car">Auto</label>
+                    <select class="form-control" id="car" name="car" formControlName="car"
+                            required>
+                        <option *ngFor="let car of carsOfUser" [value]="car.licensePlate">{{car.licensePlate}}</option>
+                    </select>
+                </div>
+
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button (click)="saveBooking()" id="save-entity" [disabled]="bookingForm.invalid"
+                    class="btn btn-success">
+                <fa-icon [icon]="faParking"></fa-icon>&nbsp;<span>Parkplatz buchen</span>
+            </button>
+        </div>
+    </div>
+
+</ng-template>

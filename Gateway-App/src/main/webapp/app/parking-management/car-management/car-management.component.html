@@ -1,0 +1,78 @@
+<div class="row">
+    <div class="col-12 text-center">
+        <h3><b>Meine Autos verwalten</b></h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Autonummer</th>
+                <th scope="col">Hersteller</th>
+                <th scope="col">Farbe</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let car of cars">
+                <td>{{ car.licensePlate }}</td>
+                <td>{{ car.manufacturer }}</td>
+                <td>{{ car.color }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <button (click)="openNewCarModal(content)" class="btn btn-light btn-block">
+            <fa-icon [icon]="faPlus"></fa-icon>
+            <b> Auto hinzufügen</b></button>
+    </div>
+</div>
+
+<ng-template #content let-modal>
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Neues Auto hinzufügen</h5>
+            <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form name="editForm" role="form" (ngSubmit)="saveCar()" [formGroup]="editForm">
+                <div class="form-group">
+                    <label for="license">Autonummer</label>
+                    <input type="text" class="form-control" id="license" name="license" formControlName="license"
+                           placeholder="XX-LL-123" required >
+                </div>
+                <div class="form-group">
+                    <label for="manufacturer">Hersteller</label>
+                    <input type="text" class="form-control" id="manufacturer" name="manufacturer"
+                           formControlName="manufacturer" placeholder="Hersteller" required>
+                </div>
+                <div class="form-group">
+                    <label for="color">Farbe</label>
+                    <select class="form-control" id="color" name="color" formControlName="color" required>
+                        <option value="schwarz">schwarz</option>
+                        <option value="weiß">weiß</option>
+                        <option value="rot">rot</option>
+                        <option value="grün">grün</option>
+                        <option value="blau">blau</option>
+                        <option value="gelb">gelb</option>
+                        <option value="andere">andere</option>
+                    </select>
+                </div>
+
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button (click)="submitForm()" id="save-entity" [disabled]="editForm.invalid || isSaving"
+                    class="btn btn-success">
+                <fa-icon [icon]="faCar"></fa-icon>&nbsp;<span>Auto hinzufügen</span>
+            </button>
+        </div>
+    </div>
+
+</ng-template>

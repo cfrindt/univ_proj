@@ -1,0 +1,57 @@
+<div class="row">
+    <div class="col-12 text-center">
+        <h3><b>Parkplatzübersicht</b></h3>
+    </div>
+</div>
+
+<div style="text-align: center">
+
+    <p *ngIf="reservedBookings.length != 0" style="font-weight: bold; font-size: large">Reservierte Parkplätze</p>
+
+    <table *ngIf="reservedBookings.length != 0" class="table" style="width: 100%">
+
+        <th>Parkplatz</th>
+        <th>Reserviert um</th>
+
+        <tr *ngFor="let booking of reservedBookings; trackBy: trackId3" style="alignment: center">
+            <td>
+                {{booking.parkingSpotId}}
+            </td>
+
+            <td>
+                {{booking.reservationTime | date: 'HH:mm:ss'}} Uhr
+            </td>
+        </tr>
+
+    </table>
+
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="map-container">
+            <div class="map-frame">
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col-12">
+        <div *ngIf="selectedParkingArea" class="card">
+            <div class="card-header">
+                <a class="font-weight-bold">{{selectedParkingArea.name}}</a>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Kapazität: {{selectedParkingArea.capacity}}</li>
+                <li class="list-group-item">freie Parkplätze: {{selectedFreeSpots}}</li>
+                <li *ngIf="!selectedParkingArea.completlyOccupied" class="list-group-item">
+                    <button class="btn btn-dark" (click)="openReservationModal(selectedParkingArea)">
+                        <fa-icon [icon]="faLock"></fa-icon>
+                        Parkplatz reservieren
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+

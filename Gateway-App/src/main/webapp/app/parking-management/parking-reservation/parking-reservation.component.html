@@ -1,0 +1,177 @@
+<div>
+    <div>
+        <div>
+            <div class="center text-center">
+
+                <h3><b>Parkplatz reservieren</b></h3>
+
+                <div style="align-content: center">
+
+                    <p *ngIf="reservedBookings.length != 0" style="font-weight: bold; font-size: large">Reservierte Parkplätze</p>
+
+                    <table *ngIf="reservedBookings.length != 0"  class="table" style="width: 100%">
+
+                        <th>Parkplatz</th>
+                        <th>Reserviert um</th>
+
+                        <tr *ngFor="let booking of reservedBookings; trackBy: trackId3" style="alignment: center">
+                            <td>
+                                {{booking.parkingSpotId}}
+                            </td>
+
+                            <td>
+                                {{booking.reservationTime | date: 'HH:mm:ss'}} Uhr
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+
+                <div>
+                    <table class="table">
+
+                        <ngb-accordion *ngFor="let parkingArea of parkingAreas; trackBy: trackId">
+                            <ngb-panel title="{{parkingArea.name}}">
+                                <ng-template ngbPanelContent>
+
+
+                                    <table>
+                                        <div class="row">
+                                            <div *ngFor="let parkingSpot of parkingSpots; trackBy: trackId">
+                                                <div *ngIf="parkingSpot.parkingAreaId == parkingArea.id">
+                                                    <div>
+                                                        <div class="col-lg">
+                                                            <button *ngIf="!parkingSpot.occupied"
+                                                                    class="btn btn-success mb-3"
+                                                                    (click)="!parkingSpot.occupied && openNewCarModal(content, parkingSpot.id)">
+                                                                <div
+                                                                    style="font-size: xx-large; font-weight: bold"> {{parkingSpot.id}} </div>
+                                                                <div>
+
+                                                                    <div class="col-12 col-md-6" style="color: black"
+                                                                         *ngIf="parkingSpot.spotType == 'Standard'">
+                                                                        <fa-icon style="color: white; opacity: 0"
+                                                                                 [icon]="faWheelchair"
+                                                                                 size="3x"></fa-icon>
+                                                                    </div>
+
+
+                                                                    <div class="col-12 col-md-6" style="color: black"
+                                                                         *ngIf="parkingSpot.spotType == 'Behindertenparkplatz'">
+                                                                        <fa-icon style="color: white"
+                                                                                 [icon]="faWheelchair"
+                                                                                 size="3x"></fa-icon>
+                                                                    </div>
+
+                                                                    <div class="col-12 col-md-6" style="color: black"
+                                                                         *ngIf="parkingSpot.spotType == 'Frauenparklpatz'">
+                                                                        <fa-icon style="color: white" [icon]="faFemale"
+                                                                                 size="3x"></fa-icon>
+                                                                    </div>
+
+                                                                    <div class="col-12 col-md-6" style="color: black"
+                                                                         *ngIf="parkingSpot.spotType == 'Kurzzeitparkplatz'">
+                                                                        <fa-icon style="color: white;"
+                                                                                 [icon]="faStopwatch"
+                                                                                 size="3x"></fa-icon>
+                                                                    </div>
+                                                                </div>
+                                                            </button>
+
+
+                                                            <button *ngIf="parkingSpot.occupied"
+                                                                    class="btn btn-danger mb-3"
+                                                                    (click)="!parkingSpot.occupied && openNewCarModal(content, parkingSpot.id)">
+
+                                                                <div
+                                                                    style="font-size: xx-large; font-weight: bold"> {{parkingSpot.id}} </div>
+
+                                                                <div>
+
+                                                                    <div class="col-12 col-md-6" style="color: black"
+                                                                         *ngIf="parkingSpot.spotType == 'Standard'">
+                                                                        <fa-icon style="color: white; opacity: 0"
+                                                                                 [icon]="faWheelchair"
+                                                                                 size="3x"></fa-icon>
+                                                                    </div>
+
+
+                                                                    <div class="col-12 col-md-6" style="color: black"
+                                                                         *ngIf="parkingSpot.spotType == 'Behindertenparkplatz'">
+                                                                        <fa-icon style="color: white"
+                                                                                 [icon]="faWheelchair"
+                                                                                 size="3x"></fa-icon>
+                                                                    </div>
+
+                                                                    <div class="col-12 col-md-6" style="color: black"
+                                                                         *ngIf="parkingSpot.spotType == 'Frauenparklpatz'">
+                                                                        <fa-icon style="color: white" [icon]="faFemale"
+                                                                                 size="3x"></fa-icon>
+                                                                    </div>
+
+                                                                    <div class="col-12 col-md-6" style="color: black"
+                                                                         *ngIf="parkingSpot.spotType == 'Kurzzeitparkplatz'">
+                                                                        <fa-icon style="color: white;"
+                                                                                 [icon]="faStopwatch"
+                                                                                 size="3x"></fa-icon>
+                                                                    </div>
+                                                                </div>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </table>
+
+                                </ng-template>
+                            </ngb-panel>
+                        </ngb-accordion>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">Parkplatz reservieren</h5>
+        <button type="button" (click)="close()" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+
+    <div class="modal-body">
+
+        <p>Bestätigen Sie, dass Sie diesen Parkplatz {{editProfileForm.getRawValue().parkingSpotId}} reservieren
+            möchten?</p>
+
+
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+
+            <div class="form-group">
+                <label class="form-control-label" for="field_car">Wählen Sie ihr Fahrzeug</label>
+                <select class="form-control" id="field_car" name="car" formControlName="carId">
+                    <option *ngIf="!editForm.get('carId')!.value" [ngValue]="null" selected></option>
+                    <option [ngValue]="carOption.licensePlate"
+                            *ngFor="let carOption of cars; trackBy: trackId2">
+                        {{carOption.licensePlate }}</option>
+                </select>
+            </div>
+
+
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <button (click)="close()" type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+
+        <button (click)="save()" type="button" class="btn btn-primary">Reservieren</button>
+
+    </div>
+
+
+</ng-template>

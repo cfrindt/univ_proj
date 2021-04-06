@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col-12 text-center">
+        <h3><b>Kostenübersicht</b></h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <table *ngIf="completedBooking" class="table">
+            <thead>
+            <tr>
+                <th scope="col">Tag</th>
+                <th scope="col">Parkzeit</th>
+                <th scope="col">Auto</th>
+                <th scope="col">Kosten</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let booking of completedBooking">
+                <td> {{booking.startTime | date: 'dd.MM.yy' }} </td>
+                <td> {{booking.parkingTime}} </td>
+                <td> {{booking.carLicensePlate}} </td>
+                <td> {{booking.cost.toFixed(2)}}€</td>
+            </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
